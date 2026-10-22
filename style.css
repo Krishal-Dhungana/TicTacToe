@@ -38,10 +38,32 @@ nav{
 
 main{
   background-color: green;
-  height: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.board{
+  height: 90%;
+  width: 40%;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boxes{
+  
+}
+
+
+
+
+
+
 
 footer{
 background-color: black;
-height: 10%;
+height: 20%;
 }
