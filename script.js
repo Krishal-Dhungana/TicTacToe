@@ -1,47 +1,98 @@
+// IMPORTS
+
+let audio= new Audio("gameover.mp3")
+
+
+/********************************/
+
 /* to check wining moves */
-
- function checkWin() {
-
-      if ( r1||r2||r3||c1||c2||c3||d1||d2)
-      {
-        alert("Game win")
-      }
-      else {
-        alert("Game draws")
-      }
-}
-
-  /* to check upcoming moves*/
-function moves() {
-    let initialMove="⭕" // ❌
+function checkWin() {
+  let b = [];
+  let cells = document.getElementsByClassName('boxes');
+  for (let i = 0; i < 9; i++){
+    b[i + 1] = cells[i].innerHTML;
   }
 
+  // Winning combinations
+  let wins = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
 
-
-
-
-
-let b1 = document.getElementById("b1");
-let b2 = document.getElementById("b2");
-let b3 = document.getElementById("b3");
-let b4 = document.getElementById("b4");
-let b5 = document.getElementById("b5");
-let b6 = document.getElementById("b6");
-let b7 = document.getElementById("b7");
-let b8 = document.getElementById("b8");
-let b9 = document.getElementById("b9");
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9], 
     
-// let r1 = (b1===b2===b3)
-// let r2= (b4===b5===b6)
-// let r3= (b7===b8===b9)
-    
-// let c1= (b1===b4===b7)
-// let c2= (b2===b5===b8)
-// let c3 = (b3===b6===b9)
-    
-// let d1= (b1===b5===b9)
-// let d2= (b3===b5===b7)
+    [1, 5, 9],
+    [3, 5, 7]
+  ];
 
-b1.addEventListener("click", () => {
-  
-})
+  for (let x = 0; x < wins.length; x++){
+    let i = wins[x][0];
+    let j = wins[x][1];
+    let k = wins[x][2];
+
+    if (b[i] !== "" && b[i] === b[j] && b[j] === b[k]) {
+     
+      audio.play();
+      cells[i - 1].style.backgroundColor = "yellow";
+      cells[j - 1].style.backgroundColor = "yellow";
+      cells[k - 1].style.backgroundColor = "yellow";
+
+      return true; 
+    }
+
+      
+    
+  }
+   if (b.slice(1).every(cell => cell !== ""))
+    {
+    alert("It's a Draw!");
+}
+  return false;
+}
+
+/* to check whether box got values or not*/
+let initialMove = 'o';
+let gameOver = false;
+function isfull(id) {
+  if (gameOver===true)
+    return;
+
+  let elem = document.getElementById(id);
+
+  if (elem.innerHTML === "") {
+    moves(initialMove, id);
+
+    if (checkWin()) {
+      gameOver = true;
+      return;
+    }
+    // else if (checkDraw()){
+      
+    // }
+    initialMove = initialMove === "o" ? "x" : "o";
+  } else {
+    alert("You can't move!");
+  }
+}
+
+/* to check upcoming moves*/
+
+function moves(initialMoves, id) {
+  let box = document.getElementById(id);
+  box.innerHTML = initialMoves;
+
+}
+
+for (let i = 0; i <= 8; i++) {
+  let boxes = document.getElementsByClassName('boxes')[i].addEventListener("click", function () {
+    let id = this.id
+
+    isfull(id);
+
+
+  })
+}
+
+/*************************************************/
